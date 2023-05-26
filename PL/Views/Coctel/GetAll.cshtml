@@ -1,0 +1,83 @@
+﻿@model ML.Coctel
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>GetAll</h1>
+
+<div class="container">
+    <section>
+        <div class="col-md-12">
+            @using (Html.BeginForm("GetAll", "Coctel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="row">
+
+                    <div class="col">
+                        @Html.LabelFor(model => model.strDrink)
+
+                        @Html.TextBoxFor(model => model.strDrink, new { @class = "form-control", @id = "txtNombre", @onkeypress="SoloLetras(event, 'txtNombre', 'lblNombre')"})
+
+                        @Html.ValidationMessageFor(model => model.strDrink, null, new {@class="text-danger"})
+                        @Html.Label(null, "", new{@id="lblNombre"})
+                    </div>
+
+                    <div class="col">
+                        @Html.LabelFor(model => model.strIngredient1)
+
+                        @Html.TextBoxFor(model => model.strIngredient1, new { @class = "form-control", @id = "txtApellidoPaterno", @onkeypress="SoloLetras(event, 'txtApellidoPaterno', 'lblApellidoPaterno')"})
+
+                        @Html.ValidationMessageFor(model => model.strIngredient1, null, new {@class="text-danger"})
+                        @Html.Label(null, "", new{@id="lblApellidoPaterno"})
+                    </div>
+
+                </div>
+                <div class="col text-center">
+
+                    <input type="submit" value="Buscar" class="btn btn-info " />
+
+                </div>
+            }
+        </div>
+    </section>
+
+    <div class="row">
+        @if (Model.Cocteles == null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.Message
+            </div>
+        }
+        @foreach (ML.Coctel coctel in Model.Cocteles)
+        {
+            <div class="col mt-3 pt-3">
+                <div class="card text-primary border-success mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Drink</h5>
+                        <p class="card-text">Nombre: @coctel.strDrink</p>
+                        <img class="card-img-top" id="Img" src="@coctel.strDrinkThumb" />
+                        <p class="card-text">Ingredientes:</p>
+                        <img class="img-thumbnai" src="https://www.thecocktaildb.com/images/ingredients/@coctel.strIngredient1-Small.png" />
+                        <p class="card-text">@coctel.strIngredient1</p>
+                        <img class="img-thumbnai" src="https://www.thecocktaildb.com/images/ingredients/@coctel.strIngredient2-Small.png" />
+                        <p class="card-text"> @coctel.strIngredient2</p>
+                        <img class="img-thumbnai" src="https://www.thecocktaildb.com/images/ingredients/@coctel.strIngredient3-Small.png" />
+                        <p class="card-text">@coctel.strIngredient3</p>
+                        <p class="card-text">Preparacion: @coctel.strInstructions</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <nav aria-label="...">
+        <ul class="pagination pagination-lg">
+            <li class="page-item" aria-current="page">
+                <span class="page-link" href="@Url.Action("GetAll", "Coctel", new { letra = "a"})">a</span>
+            </li>
+            <li class="page-item"><a class="page-link" href="@Url.Action("GetAll", "Coctel", new { letra = "b"})">b</a></li>
+            <li class="page-item"><a class="page-link" href="@Url.Action("GetAll", "Coctel", new { letra = "c"})">c</a></li>
+            <li class="page-item"><a class="page-link" href="@Url.Action("GetAll", "Coctel", new { letra = "d"})">d</a></li>
+            <li class="page-item"><a class="page-link" href="@Url.Action("GetAll", "Coctel", new { letra = "e"})">e</a></li>
+        </ul>
+    </nav>
+</div>
